@@ -1,0 +1,6 @@
+{
+  "name": "Kashyap Pharmacy",
+  "description": "Production-ready e-commerce healthcare and pharmacy web application with online prescription uploads, OTC medicines, secure cart, order tracking, and admin management.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

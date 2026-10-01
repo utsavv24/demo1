@@ -1,0 +1,246 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "Registered customer or administrator profile containing account details and contact information.",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "description": "Unique Firebase Authentication User ID.",
+          "maxLength": 128
+        },
+        "name": {
+          "type": "string",
+          "description": "Full name of the user.",
+          "maxLength": 100
+        },
+        "email": {
+          "type": "string",
+          "description": "User email address.",
+          "maxLength": 120
+        },
+        "role": {
+          "type": "string",
+          "description": "Access control role of the user.",
+          "enum": ["customer", "admin"]
+        },
+        "address": {
+          "type": "string",
+          "description": "Default shipping delivery address.",
+          "maxLength": 300
+        },
+        "phone": {
+          "type": "string",
+          "description": "Contact phone number.",
+          "maxLength": 25
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Account creation timestamp."
+        }
+      },
+      "required": ["uid", "email", "role"]
+    },
+    "Product": {
+      "title": "Product",
+      "description": "Healthcare item, medicine, or medical device available for purchase.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique product SKU / document ID.",
+          "maxLength": 128
+        },
+        "title": {
+          "type": "string",
+          "description": "Commercial medicine/item name.",
+          "maxLength": 150
+        },
+        "category": {
+          "type": "string",
+          "description": "Pharmacy category such as OTC Medicines, Vitamins, Healthcare Devices.",
+          "maxLength": 80
+        },
+        "price": {
+          "type": "number",
+          "description": "Regular retail price in USD or INR."
+        },
+        "discountPrice": {
+          "type": "number",
+          "description": "Discounted price if on promotion."
+        },
+        "isRxRequired": {
+          "type": "boolean",
+          "description": "True if prescription is strictly required by pharmaceutical law."
+        },
+        "stock": {
+          "type": "number",
+          "description": "Current quantity in inventory."
+        },
+        "imageUrl": {
+          "type": "string",
+          "description": "Storage or CDN URL of product photo.",
+          "maxLength": 1000
+        },
+        "description": {
+          "type": "string",
+          "description": "Clinical overview and indication.",
+          "maxLength": 2000
+        },
+        "ingredients": {
+          "type": "string",
+          "description": "Active pharmaceutical ingredients or composition.",
+          "maxLength": 1000
+        },
+        "usage": {
+          "type": "string",
+          "description": "Dosage instructions and usage guidelines.",
+          "maxLength": 1000
+        },
+        "rating": {
+          "type": "number",
+          "description": "Customer average rating score."
+        },
+        "ratingCount": {
+          "type": "number",
+          "description": "Count of customer reviews."
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Record creation ISO timestamp."
+        }
+      },
+      "required": ["id", "title", "category", "price", "isRxRequired", "stock"]
+    },
+    "Order": {
+      "title": "Order",
+      "description": "Customer pharmacy checkout order.",
+      "type": "object",
+      "properties": {
+        "orderId": {
+          "type": "string",
+          "description": "Unique order identifier.",
+          "maxLength": 128
+        },
+        "userId": {
+          "type": "string",
+          "description": "UID of the purchasing customer.",
+          "maxLength": 128
+        },
+        "customerName": {
+          "type": "string",
+          "description": "Recipient full name.",
+          "maxLength": 100
+        },
+        "customerEmail": {
+          "type": "string",
+          "description": "Customer contact email.",
+          "maxLength": 120
+        },
+        "customerPhone": {
+          "type": "string",
+          "description": "Customer contact telephone.",
+          "maxLength": 25
+        },
+        "shippingAddress": {
+          "type": "string",
+          "description": "Destination delivery address.",
+          "maxLength": 300
+        },
+        "items": {
+          "type": "array",
+          "description": "List of ordered items with title, quantity, price, isRxRequired."
+        },
+        "totalAmount": {
+          "type": "number",
+          "description": "Total charged amount."
+        },
+        "status": {
+          "type": "string",
+          "description": "Fulfillment status of the order.",
+          "enum": ["Pending", "Approved", "Dispatched", "Delivered"]
+        },
+        "prescriptionUrl": {
+          "type": "string",
+          "description": "Attached prescription image URL for Rx items.",
+          "maxLength": 1000
+        },
+        "isRxVerified": {
+          "type": "boolean",
+          "description": "Pharmacist validation flag for attached prescription."
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Order placement timestamp."
+        }
+      },
+      "required": ["orderId", "userId", "items", "totalAmount", "status", "createdAt"]
+    },
+    "Prescription": {
+      "title": "Prescription",
+      "description": "Doctor's prescription uploaded by user for verification and order fulfillment.",
+      "type": "object",
+      "properties": {
+        "uploadId": {
+          "type": "string",
+          "description": "Unique upload identifier.",
+          "maxLength": 128
+        },
+        "userId": {
+          "type": "string",
+          "description": "User ID of uploader.",
+          "maxLength": 128
+        },
+        "userEmail": {
+          "type": "string",
+          "description": "Email address of customer.",
+          "maxLength": 120
+        },
+        "userName": {
+          "type": "string",
+          "description": "Name of customer.",
+          "maxLength": 100
+        },
+        "imageUrl": {
+          "type": "string",
+          "description": "Download URL of the prescription document or photo.",
+          "maxLength": 1000
+        },
+        "notes": {
+          "type": "string",
+          "description": "Customer medical notes or instructions.",
+          "maxLength": 500
+        },
+        "status": {
+          "type": "string",
+          "description": "Review status by Kashyap Pharmacy pharmacist.",
+          "enum": ["Pending Review", "Approved", "Rejected"]
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Upload timestamp."
+        }
+      },
+      "required": ["uploadId", "userId", "imageUrl", "status", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "Customer and admin account profiles."
+    },
+    "/products/{productId}": {
+      "schema": "Product",
+      "description": "Pharmacy catalog of medicines, devices, and healthcare products."
+    },
+    "/orders/{orderId}": {
+      "schema": "Order",
+      "description": "Customer purchase orders and status tracking."
+    },
+    "/prescriptions/{prescriptionId}": {
+      "schema": "Prescription",
+      "description": "Customer doctor prescription uploads for pharmacist review."
+    }
+  }
+}
